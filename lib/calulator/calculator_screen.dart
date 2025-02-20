@@ -69,17 +69,20 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
 
   body(){
   return  SingleChildScrollView(child:
-    Column(
-      children: [
-        TextField(
-          controller: _controller,
-        ),
-        const SizedBox(height: 10,),
-        ElevatedButton(onPressed: (){
-          _cubit.add(_controller.text);
-        }, child: const Text("Calculate"))
+    Padding(
+      padding: const EdgeInsets.all(18.0),
+      child: Column(
+        children: [
+          TextField(
+            controller: _controller,
+          ),
+          const SizedBox(height: 10,),
+          ElevatedButton(onPressed: (){
+            _cubit.add(_controller.text);
+          }, child: const Text("Calculate"))
 
-      ],),);
+        ],),
+    ),);
   }
 
 

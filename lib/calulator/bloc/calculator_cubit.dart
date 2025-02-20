@@ -17,6 +17,7 @@ class CalculatorCubit extends Cubit<CalculatorState> {
           int delimiterEnd = numbers.indexOf("\n");
           if (delimiterEnd == -1) {
             emit(CalculatorError("Invalid delimiter format"));
+            return;
           }
           delimiter = numbers.substring(2, delimiterEnd);
           numbers = numbers.substring(delimiterEnd + 1);
@@ -30,7 +31,6 @@ class CalculatorCubit extends Cubit<CalculatorState> {
 
         for (String numStr in numStrings) {
           if (numStr.isNotEmpty) {
-            // Handle potential empty strings after splits
             try {
               int num = int.parse(numStr.trim());
               if (num < 0) {
@@ -39,6 +39,7 @@ class CalculatorCubit extends Cubit<CalculatorState> {
               nums.add(num);
             } catch (e) {
               emit(CalculatorError("Invalid number format: $numStr"));
+              return;
             }
           }
         }
@@ -46,13 +47,10 @@ class CalculatorCubit extends Cubit<CalculatorState> {
         if (negatives.isNotEmpty) {
           emit(CalculatorError(
               "Negative numbers not allowed ${negatives.join(",")}"));
-        }else{
+        } else {
           var result = nums.fold(0, (sum, num) => sum + num);
-
           emit(CalculatorLoaded("Result: $result"));
         }
-
-
       }
     } catch (e) {
       emit(CalculatorError("Something went wrong"));
